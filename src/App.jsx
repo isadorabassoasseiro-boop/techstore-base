@@ -20,7 +20,12 @@ export default function App() {
 
   useEffect(() => {
     buscarProdutos()
-      .then((dados) => setProdutos(dados))
+      .then((dados) => {
+        const produtosDisponiveis = dados.filter(
+          (produto) => produto.estoque > 0 && produto.price !== undefined && produto.price !== null
+        )
+        setProdutos(produtosDisponiveis)
+      })
       .catch(() => setErro('Não foi possível carregar os produtos.'))
       .finally(() => setCarregando(false))
 
